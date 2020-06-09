@@ -1,7 +1,13 @@
 export default [
   {
-    path: "/",
-    name: "home",
-    compnent: () => require("@/views/home/Home"),
+    path: '',
+    name: '',
+    redirect: '/home',
+    component: () => import('@/views/home/Home.vue')
   },
+  {
+    path: '/home',
+    name: 'Home',
+    component: () => import('@/views/home/Home.vue')
+  }
 ];
