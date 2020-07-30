@@ -1,0 +1,9 @@
+@mixin main-center {
+  width: 1200px;
+  margin: 0 auto;
+}
+@mixin overflow-text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

@@ -1,0 +1,23 @@
+$light-blue: #497EB9 !default;
+$deep-blue: #214285 !default;
+$white: #FFFFFF !default;
+$btn-light-hover-bgcolor: #4A87CB !default;
+
+/* 列表detail 文字颜色 */
+$link-detail: $light-blue;
+/* 列表detail hover文字颜色 */
+$link-hover-detail: $deep-blue;
+
+/* el-button--primary 文字颜色 */
+$button-primary-color: $white;
+/* el-button--primary 背景颜色 */
+$button-primary-bgcolor: $deep-blue;
+/* el-button--primary hover背景颜色 */
+$button-primary-hover-bgcolor: $light-blue;
+
+/* el-button--default 文字颜色 */
+$button-default-color: $deep-blue;
+/* el-button--default 边框颜色 */
+$button-default-border-color: $deep-blue;
+/* el-button--default hover背景颜色 */
+$button-default-hover-bgcolor: #ECF5FF;
