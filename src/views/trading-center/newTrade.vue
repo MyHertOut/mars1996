@@ -10,7 +10,7 @@
           <el-step title="End" class="step-end"></el-step>
         </el-steps>
         <div class="new-content">
-          <basic @nextStep="nextStep" v-show="stepActive === 0" />
+          <basic @nextStep="nextStep" v-show="stepActive === 0" :submitData="submitData"/>
           <review @nextStep="nextStep" v-show="stepActive === 1" :submitData="submitData" />
           <div class="setp-end" v-show="stepActive === 2">
             <div class="end-status">
@@ -23,7 +23,7 @@
               </p>
               <p class="operation">
                 <span @click="$router.push({ name: 'BondTrading' })">Trade Center</span>
-                <span @click="stepActive = 0;submitData = {};">Create Trade</span>
+                <span @click="stepActive = 0;submitData = Object.assign({}, reloadData);">Create Trade</span>
                 <span @click="$router.push({ name: 'TradeHistory' })">View Progress</span>
               </p>
             </div>
@@ -52,7 +52,21 @@ export default {
           name: 'New Trade'
         }
       ],
-      submitData: {}
+      submitData: {},
+      reloadData: {
+        tokenCode: '',
+        userAddress: '',
+        quantity: '',
+        bidAddress: '',
+        paymentType: 2,
+        price: '',
+        tokenMark: '',
+        currencyType: 2,
+        currency: '',
+        orderStartTime: '',
+        orderEndTime: '',
+        paymentInfo: ''
+      }
     };
   },
   methods: {

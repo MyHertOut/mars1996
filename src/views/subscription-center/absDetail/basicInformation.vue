@@ -32,7 +32,9 @@
     </el-row>
     <el-row>
       <el-col :span="4"><div class="label">Terms and Conditions:</div></el-col>
-      <el-col :span="19"><div class="value">{{isEmpty(infoObj.acknowledgeTc)}}</div></el-col>
+      <el-col :span="19">
+        <div class="value"><pre>{{isEmpty(infoObj.acknowledgeTc)}}</pre></div>
+      </el-col>
     </el-row>
   </div>
 </template>

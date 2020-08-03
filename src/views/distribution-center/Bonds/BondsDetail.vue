@@ -252,7 +252,7 @@ export default {
       font-size: 16px;
     }
     .view-content {
-      padding: 66px 30px 100px;
+      padding: 40px 30px 100px;
       background-color: #fff
     }
     .view-item {

@@ -62,6 +62,7 @@
         :visible.sync="confirmVisible"
         :submitText="'Confirm'"
         @handleOK="couponCalculate"
+        :width="'630px'"
       >
         <div class="confirm-calculate" v-loading="confirmCalculateLoading">Please confirm to calculate</div>
       </element-dialog>

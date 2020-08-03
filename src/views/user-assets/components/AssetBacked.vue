@@ -22,7 +22,7 @@
       @handleChangePage="handleChangePage"
     >
       <template v-slot:edit="{row}">
-        <span @click="goTransfer(row)" style="color:#214285;cursor: pointer;">Transfer</span>
+        <span class="link-txt" @click="goTransfer(row)">Transfer</span>
       </template>
     </element-table>
   </div>

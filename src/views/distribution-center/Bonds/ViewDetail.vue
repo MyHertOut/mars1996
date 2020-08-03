@@ -131,7 +131,11 @@
         </el-row>
         <el-row :gutter="20" v-if="detailData.acknowledgeTc">
           <el-col :span="4"><div class="sub-title">Terms & Conditions：</div></el-col>
-          <el-col :span="20"><div class="grid-content terms-conditions" style="word-wrap: break-word;word-break: keep-all;">{{detailData.acknowledgeTc}}</div></el-col>
+          <el-col :span="20">
+            <div class="grid-content terms-conditions" style="word-wrap: break-word;word-break: keep-all;white-space:initial;">
+              <pre>{{detailData.acknowledgeTc}}</pre>
+            </div>
+          </el-col>
         </el-row>
         <p class="head-title">Coupon & Principal</p>
         <el-row :gutter="20">
@@ -795,7 +799,7 @@ export default {
             this.paymentTableColumn.push({
               label: i + '/' + this.detailData.couponPeriods,
               prop: i + '/' + this.detailData.couponPeriods,
-              width: 155
+              width: 150
             });
           }
           this.paymentTableData = tableDatas.map(v => {
@@ -938,7 +942,7 @@ export default {
             this.paymentTableColumn.push({
               label: i + '/' + this.detailData.couponPeriods,
               prop: i + '/' + this.detailData.couponPeriods,
-              width: 154
+              width: 150
             });
           }
           this.paymentTableData = tableDatas.map(v => {
@@ -1250,13 +1254,13 @@ export default {
       }
     }
   }
-  .link-txt {
-    color: #214285;
-    &:hover {
-      text-decoration: underline;
-      color: #497EB9;
-    }
-  }
+  // .link-txt {
+  //   color: #214285;
+  //   &:hover {
+  //     text-decoration: underline;
+  //     color: #497EB9;
+  //   }
+  // }
   .select-country {
     margin-bottom: 30px;
     .country-title {

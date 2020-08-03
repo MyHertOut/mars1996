@@ -39,7 +39,7 @@ html, body, #app {
     height: 100%;
     font-family: 'calibri';
 }
-button {
+button, input {
   font-family: 'calibri';
 }
 /* make sure to set some focus styles for accessibility */

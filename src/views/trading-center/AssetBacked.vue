@@ -295,7 +295,10 @@ export default {
       if (data.code === '1000') {
         this.secondaryDialog = false;
         this.$router.push({
-          name: 'TradeHistory'
+          name: 'TradeOrders',
+          query: {
+            navActive: 1
+          }
         });
       }
     },
@@ -338,7 +341,12 @@ export default {
       this.paymentBtnLoading = false;
       if (res.code === '1000') {
         this.paymentDialog = false;
-        this.getReceivedList();
+        this.$router.push({
+          name: 'TradeOrders',
+          query: {
+            navActive: 1
+          }
+        });
       }
     },
     handleKeyWord (str) {

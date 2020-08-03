@@ -27,7 +27,7 @@
       <element-table :columns="columns" :data="data"
         pager :pageTotal="pageTotal" :pageIndex="searchParam.page" @handleChangePage="handleChangePage">
         <template v-slot:edit="{row}">
-          <span @click="goDetail(row)" v-permissions="'organization.account.details'" style="color:#214285;cursor: pointer;">Details</span>
+          <span @click="goDetail(row)" v-permissions="'organization.account.details'" class="link-txt">Details</span>
         </template>
         <template v-slot:accountStatus="{row}">
           <span style="color:#E6471F;" v-if="!row.accountStatus">Disable</span>

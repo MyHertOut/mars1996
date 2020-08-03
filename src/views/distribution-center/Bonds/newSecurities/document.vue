@@ -524,6 +524,15 @@ export default {
 }
 </style>
 <style lang="scss">
+.add-new-document {
+  .el-form {
+    .el-form-item:not(.is-required) {
+      .el-form-item__label {
+        padding-left: 0;
+      }
+    }
+  }
+}
 // .add-new-document {
 //   .el-form-item.is-required:not(.is-no-asterisk)>.el-form-item__label:before {
 //     display: none;

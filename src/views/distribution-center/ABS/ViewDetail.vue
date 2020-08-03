@@ -76,7 +76,11 @@
         </el-row>
         <el-row :gutter="20" v-if="detailData.acknowledgeTc">
           <el-col :span="5"><div class="sub-title">Terms & Conditions：</div></el-col>
-          <el-col :span="19"><div class="grid-content terms-conditions" style="word-wrap: break-word;word-break: keep-all;">{{detailData.acknowledgeTc}}</div></el-col>
+          <el-col :span="19">
+            <div class="grid-content terms-conditions" style="word-wrap: break-word;word-break: keep-all;white-space: initial;">
+              <pre>{{detailData.acknowledgeTc}}</pre>
+            </div>
+          </el-col>
         </el-row>
         <p class="head-title">Coupon & Principal</p>
         <el-row :gutter="20">
@@ -382,6 +386,7 @@
     <element-dialog
       :visible.sync="secondPwdDialogVisible"
       v-loading="secondaryPwdloading"
+      width="640px"
     >
       <el-form ref="secondPwdForm" :model="secondPwdForm" :rules="secondPwdRules"
         label-width="176px" label-position="left" @submit.native.prevent>

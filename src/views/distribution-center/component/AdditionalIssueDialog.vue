@@ -74,7 +74,6 @@ export default {
       trigger: ['change', 'blur'],
       validator: (rule, value, callback) => {
         if (!integersExcludeZero.test(value)) {
-          // eslint-disable-next-line
           callback('Integers greater than 0');
           return;
         }
@@ -85,7 +84,6 @@ export default {
       trigger: 'blur',
       validator: (rule, value, callback) => {
         if (!secondaryPwdReg.test(value)) {
-          // eslint-disable-next-line
           callback('Password does not match the criteria');
           return;
         }

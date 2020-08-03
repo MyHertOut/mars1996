@@ -20,8 +20,8 @@
           <el-button type="primary" :loading="loading" class="submit" @click="loginUser" :disabled="!isLoginBtn">Login</el-button>
           <div class="forget" @click="forgetVisible = true">Forget Password?</div>
         </div>
+        <div class="login-footer">&copy; 2020 Settlity. All Rights Reserved.</div>
       </div>
-      <div class="login-footer">STACS © 2020. All Rights Reserved.</div>
     </div>
     <div v-else-if="$store.state.common.systemConfig.webLoginPageType === '1' || webLoginPageType === '1'" class="isPocContent">
       <div class="isPocContent-left">
@@ -41,11 +41,11 @@
             </el-form-item>
           </el-form>
           <el-button type="primary" :loading="loading" class="submit" @click="loginUser" :disabled="!isLoginBtn">Login</el-button>
-          <div class="forget">Forget Password? Click <span @click="forgetVisible = true">here</span> to reset.</div>
+          <div class="forget">Forget Password? Click <span @click="forgetVisible = true" class="forget-light">here</span> to reset.</div>
           <div class="forget">Or sign up <span>here</span> for a free account to start using!</div>
           <div class="loginFooter-Sub loginFooter-About">About Settlity</div>
           <div class="loginFooter-Sub">Contact Us</div>
-          <div class="POClogin-footer">STACS © 2020. All Rights Reserved.</div>
+          <div class="POClogin-footer">&copy; 2020 Settlity. All Rights Reserved.</div>
         </div>
       </div>
       <div class="isPocContent-right"></div>
@@ -94,6 +94,7 @@
         </div>
       </span>
     </el-dialog>
+    <setPassword @setSecPwd="setSecPwd" :emailSecPwd="emailSecPwd" :isShow="passwordDialog" :changeType="changrType" @closeDialog="passwordDialog = false" />
   </div>
 </template>
 <script>
@@ -105,8 +106,9 @@ import {
 } from '@/common/util';
 import { loginUser } from '@/api/distribution-center';
 import { sendEmail, loginPwd, validEmailCode } from '@/api/account';
-import { getSystemConfig } from '@/api/common';
+import { getSystemConfig, getUser } from '@/api/common';
 import md5 from 'md5';
+import setPassword from '@/components/setPassword';
 
 export default {
   name: 'Login',
@@ -136,6 +138,10 @@ export default {
       }
     };
     return {
+      emailSecPwd: '',
+      userNo: '',
+      passwordDialog: false,
+      changrType: 2,
       webLoginPageType: '',
       pwdReadOnly: true,
       login: {
@@ -379,20 +385,42 @@ export default {
               slient: true
             });
             if (data.code === '1000') {
-              // this.$message({ message: 'Login Successfully', type: 'success' });
-              localStorage.setItem(LOCAL_STORAGE_TOKEN, data.data.userNo);
-              this.$router.push({ name: 'LoginHome' });
-              // this.$router.push({ name: 'accountCenter' }).catch(err => {});
-              this.$store.dispatch('getSystemConfig');
-              localStorage.removeItem(LOCAL_STORAGE_TRADEADDRESS);
-              localStorage.removeItem(LOCAL_STORAGE_BALANCEADDRESS);
-              localStorage.removeItem(LOCAL_STORAGE_SECURITIESADDRESS);
+              this.emailSecPwd = data.data.email;
+              this.userNo = data.data.userNo;
+              this.getUser();
             }
             this.loading = false;
           }
         });
       }
+    },
+    getUser (userNo) {
+      getUser({ slient: true }).then(res => {
+        if (res.code === '1000') {
+          if (res.data.secondaryStatus) {
+            localStorage.setItem(LOCAL_STORAGE_TOKEN, this.userNo);
+            this.$store.dispatch('getSystemConfig');
+            localStorage.removeItem(LOCAL_STORAGE_TRADEADDRESS);
+            localStorage.removeItem(LOCAL_STORAGE_BALANCEADDRESS);
+            localStorage.removeItem(LOCAL_STORAGE_SECURITIESADDRESS);
+            this.$router.push({ name: 'LoginHome' });
+          } else {
+            this.passwordDialog = true;
+          }
+        }
+      })
+    },
+    setSecPwd () {
+      localStorage.setItem(LOCAL_STORAGE_TOKEN, this.userNo);
+      this.$store.dispatch('getSystemConfig');
+      localStorage.removeItem(LOCAL_STORAGE_TRADEADDRESS);
+      localStorage.removeItem(LOCAL_STORAGE_BALANCEADDRESS);
+      localStorage.removeItem(LOCAL_STORAGE_SECURITIESADDRESS);
+      this.$router.push({ name: 'LoginHome' });
     }
+  },
+  components: {
+    setPassword
   }
 };
 </script>
@@ -403,13 +431,11 @@ export default {
   .notPoc{
     background: url(../assets/images/login-bg.png) no-repeat center center;
     background-size: cover;
-    height: 100%;
+    min-height: 100%;
   }
   .login-footer {
-    position: absolute;
-    bottom: 55px;
-    left: 0;
-    right: 0;
+    margin-top: 85px;
+    margin-bottom: 54px;
     opacity: 0.6;
     color: #ffffff;
     text-align: center;
@@ -437,7 +463,7 @@ export default {
       width: 100%;
       height: 40px;
       font-size: 18px;
-      font-family: 'calibri';
+      // font-family: 'calibri';
     }
     .forget {
       text-align: center;
@@ -501,8 +527,6 @@ export default {
   .isPocContent{
     display: flex;
     width: 100%;
-    height: 100%;
-    overflow: hidden;
     .isPocContent-left{
       width: 640px;
       background: #FFFFFF;
@@ -536,19 +560,23 @@ export default {
           letter-spacing: 0;
           text-align: left;
           line-height: 27px;
-          > span {
-            color: #214285;
-            cursor: pointer;
-          }
+          // > span {
+          //   color: #214285;
+          //   cursor: pointer;
+          // }
+        }
+        .forget-light{
+           color: #214285;
+           cursor: pointer;
         }
         .loginFooter-Sub{
           font-family: Calibri;
           font-size: 18px;
-          color: #487EB9;
+          // color: #487EB9;
           letter-spacing: 0;
           text-align: left;
           line-height: 12px;
-          cursor: pointer;
+          // cursor: pointer;
           &.loginFooter-About{
             margin-top: 80px;
             margin-bottom: 14px;
@@ -556,6 +584,7 @@ export default {
         }
         .POClogin-footer{
           margin-top: 28px;
+          margin-bottom: 33px;
           font-family: Calibri;
           font-size: 18px;
           color: #192231;
@@ -579,8 +608,9 @@ export default {
     padding: 0;
   }
   .el-button.is-disabled {
-    background-color: #E5E5E5 !important;
-    color: #8D93A1 !important;
+    background-color: #E5E5E5;
+    color: #8D93A1;
+    border-color: #E5E5E5 !important;
   }
   .home-header {
     box-shadow: none;

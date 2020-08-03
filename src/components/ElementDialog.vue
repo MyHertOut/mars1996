@@ -52,7 +52,7 @@ export default {
 <style lang="scss">
   .common-dialog {
     .el-dialog__footer {
-      padding: 0 60px 30px 0px; // 35px 60px 30px 0px;
+      padding: 0 40px 30px 0px; // 35px 60px 30px 0px;
     }
     .el-dialog__body {
       padding: 40px; //40px 60px 30px 60px;

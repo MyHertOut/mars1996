@@ -8,7 +8,7 @@
     </el-row>
     <el-row>
       <el-col :span="4"><div class="label">Disbursement Token:</div></el-col>
-      <el-col :span="8"><div class="value">{{formatTime(infoObj.disbursementCode)}}</div></el-col>
+      <el-col :span="8"><div class="value">{{infoObj.disbursementCode}}</div></el-col>
     </el-row>
     <el-row>
       <el-col :span="4"><div class="label">Call Date(s):</div></el-col>

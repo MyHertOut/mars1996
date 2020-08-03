@@ -512,9 +512,8 @@ export default {
         button {
           width: 300px;
           height: 40px;
-          font-size: 20px;
+          font-size: 16px;
           font-weight: normal;
-          color: #2F39E3;
           &:focus {
             background-color: #fff;
           }

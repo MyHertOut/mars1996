@@ -5,7 +5,7 @@
       <div class="info-top">
         <div class="detail-left">
           <div class="head-title">
-            <span>{{detailObj.tokenCode}} ({{detailObj.orderName}})</span>
+            <span>{{detailObj.tokenCode}} ({{detailObj.tokenName}})</span>
             <!-- <span>(Security Name)</span> -->
           </div>
           <div class="number-info">
@@ -87,7 +87,7 @@
           <el-progress :percentage="detailObj.percentage" color="#214285" :stroke-width="4"></el-progress>
           <div class="parameter-box">
             <span class="label">Available:</span>
-            <span class="value">{{formatNumber(detailObj.remainQuantity) | demicrometer}} {{detailObj.tokenCode}}</span>
+            <span class="value">{{formatNumber(detailObj.remainQuantity, 'remainQuantity') | demicrometer}} {{detailObj.tokenCode}}</span>
           </div>
           <div class="parameter-box">
             <span class="label">Unit Price:</span>
@@ -97,7 +97,7 @@
           <div class="num">
             <el-form :model="quantityForm" :rules="quantityRules" ref="quantityForm" class="quantity-Form">
               <el-form-item prop="quantityNum">
-                <el-input type="text" v-model="quantityForm.quantityNum" autocomplete="off" v-if="bizStatus === 1" :placeholder="quantityPlaceholder"></el-input>
+                <el-input type="text" v-model="quantityForm.quantityNum" autocomplete="off" v-if="detailObj.bizStatus === 1" :placeholder="quantityPlaceholder"></el-input>
                 <el-input type="text" v-model="quantityForm.quantityNum" autocomplete="off" v-else disabled></el-input>
                 <div class="qu-label">Quantity: </div>
               </el-form-item>
@@ -115,7 +115,7 @@
             <span class="value" v-else>{{detailObj.totalPayable | demicrometer}} {{detailObj.tokenMark}}</span>
           </div>
           <div v-permissions="'subscription.centre.create'">
-            <el-button type="primary" class="submit-btn" @click="openPayDia" :disabled="!conditionsChecked" v-if="bizStatus === 1">Submit</el-button>
+            <el-button type="primary" class="submit-btn" @click="openPayDia" :disabled="!conditionsChecked" v-if="detailObj.bizStatus === 1">Submit</el-button>
             <el-button type="primary" class="submit-btn" disabled v-else>Submit</el-button>
           </div>
           <div class="conditions" v-permissions="'subscription.centre.content'" v-if="detailObj.tcStatus">
@@ -128,7 +128,7 @@
       <div class="info-bottom">
         <div class="info-bottom-nav">
           <div class="nav-item" v-for="(v, k) in infoTabs" :key="k" :class="{'nav-active': tabsName === k }"
-            :style="k === infoTabs.length - 1 ? 'border: 0;' : ''" @click="tabsName = v.key">
+            :style="k === infoTabs.length - 1 ? 'border: 0;text-align: left;padding-left: 30px;' : ''" @click="tabsName = v.key">
             <span>{{v.name}}</span>
           </div>
         </div>
@@ -148,7 +148,7 @@
               <tradingRestriction />
             </div>
             <div class="documents-page" v-if="tabsName === 4">
-              <documents />
+              <documents :type="detailObj.tradeType" />
             </div>
           </div>
         </div>
@@ -214,7 +214,9 @@
 
     <el-dialog title="Terms And Conditions" :visible.sync="conditionsDialog"
       width="744px" top="20px" class="conditions-dialog">
-      <div class="conditions-content">{{termsAndConditions}}</div>
+      <div class="conditions-content">
+        <pre>{{termsAndConditions}}</pre>
+      </div>
       <div class="foot-btn">
         <el-button type="primary" @click="conditionsDialog = false;conditionsChecked = true">Agree</el-button>
       </div>
@@ -326,7 +328,8 @@ export default {
       addressBalance: '',
       addressBalanceLoading: false,
       forgotPassword: false,
-      quantityPlaceholder: ''
+      quantityPlaceholder: '',
+      currentTime: ''
     };
   },
   watch: {
@@ -354,11 +357,6 @@ export default {
         this.detailObj.totalPayable = '';
         this.detailObj.annualEarnings = '';
       }
-    }
-  },
-  computed: {
-    bizStatus () {
-      return parseInt(this.$route.query.bizStatus);
     }
   },
   created () {
@@ -482,13 +480,21 @@ export default {
     },
     formatCoupon (num) {
       if (num) {
-        return toFixeds(parseFloat(num), 2, false);
+        return parseFloat(num);
       } else {
         return '--';
       }
     },
-    formatNumber (num) {
-      return parseFloat(num) || '--';
+    formatNumber (num, type) {
+      if (type === 'remainQuantity') {
+        if (parseInt(num) === 0) {
+          return '0';
+        } else {
+          return parseFloat(num) || '--';
+        }
+      } else {
+        return parseFloat(num) || '--';
+      }
     },
     formatTime (time) {
       return formatDate(time) || '--';
@@ -503,16 +509,17 @@ export default {
         notify: notify.error
       });
       this.loading = false;
-      if (data.data) {
+      if (data.code === '1000') {
         this.detailObj = Object.assign({}, data.data);
-        if (this.bizStatus === 1) {
-          this.detailObj.endTimerDesc = 'Ends in ' + changeTimeStamp(this.detailObj.orderEndTime);
-        } else if (this.bizStatus === 2) {
-          this.detailObj.endTimerDesc = 'Starting in ' + changeTimeStamp(this.detailObj.orderStartTime);
+        this.currentTime = this.detailObj.currentTime;
+        if (this.detailObj.bizStatus === 1) {
+          this.detailObj.endTimerDesc = 'Ends in ' + changeTimeStamp(this.detailObj.orderEndTime, this.currentTime);
+        } else if (this.detailObj.bizStatus === 2) {
+          this.detailObj.endTimerDesc = 'Starting in ' + changeTimeStamp(this.detailObj.orderStartTime, this.currentTime);
         } else {
           this.detailObj.endTimerDesc = 'Concluded';
         }
-        this.detailObj.percentage = 100 - ((parseFloat(this.detailObj.remainQuantity) / parseFloat(this.detailObj.quantity)) * 100);
+        this.detailObj.percentage = (parseFloat(this.detailObj.subscribed) / parseFloat(this.detailObj.quantity)) * 100;
         this.detailObj.percentage = parseFloat(toFixeds(this.detailObj.percentage, 2));
         if (this.detailObj.tradeType === 1) {
           this.quantityPlaceholder = `Above ${this.formatNumber(this.detailObj.quantity)} ${this.detailObj.tokenCode}`;
@@ -522,21 +529,42 @@ export default {
         this.conditionsChecked = !this.detailObj.tcStatus;
         this.breadData[2].name = this.detailObj.orderName;
         clearInterval(this.endTimer);
-        if (this.bizStatus === 1) {
-          this.endTimer = setInterval(() => {
-            this.detailObj.endTimerDesc = 'Ends in ' + changeTimeStamp(this.detailObj.orderEndTime);
-            this.$forceUpdate();
-          }, 1000);
-        } else if (this.bizStatus === 2) {
-          this.endTimer = setInterval(() => {
-            this.detailObj.endTimerDesc = 'Starting in ' + changeTimeStamp(this.detailObj.orderStartTime);
-            this.$forceUpdate();
-          }, 1000);
+        if (this.detailObj.bizStatus === 1) {
+          this.endTimerFu();
+        } else if (this.detailObj.bizStatus === 2) {
+          this.startTimer();
         } else {
           this.detailObj.endTimerDesc = 'Concluded';
         }
         this.getAddress();
       }
+    },
+    endTimerFu () {
+      this.endTimer = setInterval(() => {
+        this.currentTime += 1000;
+        this.detailObj.endTimerDesc = 'Ends in ' + changeTimeStamp(this.detailObj.orderEndTime, this.currentTime);
+        this.$forceUpdate();
+        if (this.currentTime >= this.detailObj.orderEndTime) {
+          clearInterval(this.endTimer);
+          this.quantityForm.quantityNum = '';
+          this.$refs.quantityForm.clearValidate();
+          this.detailObj.endTimerDesc = 'Concluded';
+          this.detailObj.bizStatus = 3;
+        }
+      }, 1000);
+    },
+    startTimer () {
+      this.endTimer = setInterval(() => {
+        this.currentTime += 1000;
+        this.detailObj.endTimerDesc = 'Starting in ' + changeTimeStamp(this.detailObj.orderStartTime, this.currentTime);
+        this.$forceUpdate();
+        if (this.currentTime >= this.detailObj.orderStartTime) {
+          clearInterval(this.endTimer);
+          this.detailObj.bizStatus = 1;
+          this.detailObj.endTimerDesc = 'Ends in ' + changeTimeStamp(this.detailObj.orderEndTime, this.currentTime);
+          this.endTimerFu();
+        }
+      }, 1000);
     }
   },
   beforeDestroy () {
@@ -652,11 +680,11 @@ export default {
           justify-content: space-between;
           margin-bottom: 10px;
           .label {
-            font-size: 16px;
+            font-size: 14px;
             color: #616367;
           }
           .value {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
           }
         }
@@ -679,7 +707,10 @@ export default {
             cursor: pointer;
           }
           & > span:last-child {
-            color: #5885ba;
+            color: #497eb9;
+            &:hover {
+              color: #214285;
+            }
           }
         }
       }
@@ -728,7 +759,7 @@ export default {
     .info-top {
       .el-progress__text {
         margin-left: 27px;
-        font-size: 16px !important;
+        font-size: 14px !important;
         color: #192231;
         font-weight: 600;
         float: right;

@@ -42,7 +42,7 @@
           <div class="safeItem-desc safeItem-descAno">Login Password</div>
         </div>
         <div class="safeItem-right" v-permissions="'member.account.pwdSet'">
-          <span @click="passwordDialog = true;changrType = 1">Reset</span>
+          <span class="link-txt" @click="passwordDialog = true;changrType = 1">Reset</span>
         </div>
       </div>
       <div class="safe-item">
@@ -55,7 +55,7 @@
           <div class="safeItem-desc">Enhance Asset Security</div>
         </div>
         <div class="safeItem-right" v-permissions="'member.account.secPwdSet'">
-          <span v-if="userInfo.secondaryStatus" @click="passwordDialog = true;changrType = 2">Reset</span>
+          <span class="link-txt" v-if="userInfo.secondaryStatus" @click="passwordDialog = true;changrType = 2">Reset</span>
           <el-button v-else @click="passwordDialog = true;changrType = 2" class="safeItemBtn" type="primary">Setup</el-button>
         </div>
       </div>
@@ -128,9 +128,8 @@ export default {
       .content-item{
         width: 25%;
         .contentItem-label{
-          font-family: PingFangSC-Light;
           font-size: 14px;
-          color: #616367;
+          color: #8D93A1;
           margin-bottom: 9px;
         }
         .contentItem-info{
@@ -185,7 +184,7 @@ export default {
           color: #192231;
           text-align: left;
           line-height: 12px;
-          margin: 0 110px 0 12px;
+          margin: 0 140px 0 12px;
         }
         .safeItem-desc{
           font-size: 14px;
@@ -193,15 +192,13 @@ export default {
           letter-spacing: 0;
           line-height: 12px;
           &.safeItem-descAno{
-            padding-left: 22px;
+            padding-left: 18px;
           }
         }
       }
       .safeItem-right{
         > span {
-          cursor: pointer;
           font-size: 14px;
-          color: #3A5792;
           padding-right: 22px;
         }
         .safeItemBtn{

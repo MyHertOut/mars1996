@@ -67,6 +67,7 @@ export default {
   },
   watch: {
     detailData () {
+      console.log(this.detailData)
       if (this.detailData.firstSettlementDate && this.detailData.couponPeriods) {
         let times;
         if (this.detailData.couponFrequency === '0') {
@@ -170,3 +171,4 @@ export default {
   }
 };
 </script>
+

@@ -42,10 +42,10 @@
           </el-select>
         </el-form-item>
         <el-form-item label="Token Code：" prop="code">
-          <el-input v-model="ruleForm.code" maxlength="32" placeholder="Please enter the token code"></el-input>
+          <el-input v-model.trim="ruleForm.code" maxlength="32" placeholder="Please enter the token code"></el-input>
         </el-form-item>
         <el-form-item label="Token Name：" prop="name">
-          <el-input v-model="ruleForm.name" maxlength="64" placeholder="Please enter the token name"></el-input>
+          <el-input v-model.trim="ruleForm.name" maxlength="64" placeholder="Please enter the token name"></el-input>
         </el-form-item>
       <!-- </template> -->
       <el-form-item label="Issuance Address：" prop="issuanceAddress">
@@ -101,7 +101,7 @@ export default {
       }
     },
     'ruleForm.name': function (n, o) {
-      if (notChineseReg.test(this.ruleForm.name) || n === '') {
+      if (/^[0-9a-zA-Z]+$/.test(this.ruleForm.name) || n === '') {
         this.ruleForm.name = n;
       } else {
         this.ruleForm.name = o;

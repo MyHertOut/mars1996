@@ -62,7 +62,7 @@
         <el-col :span="4"><div class="sub-title">Terms and Conditions：</div></el-col>
         <el-col :span="19">
             <div class="grid-content">
-            {{ detailData.acknowledgeTc || '--' }}
+              <pre>{{ detailData.acknowledgeTc || '--' }}</pre>
             </div>
         </el-col>
     </el-row>

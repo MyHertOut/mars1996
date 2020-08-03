@@ -288,7 +288,8 @@ export default {
         payAmount: removeComma(payAmount),
         secondaryPwd: encryPwd,
         securityCode,
-        snapshotNo: timeStamp
+        snapshotNo: timeStamp,
+        securityType: this.$route.query.tokenType
       };
       if (this.reDistribute) {
         url = distributeRetrySubmit;

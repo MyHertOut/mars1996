@@ -229,7 +229,7 @@
           rows="4"
           placeholder="Please enter Payment Information"
           v-model="ruleForm.paymentInfo"
-          maxlength="250"
+          maxlength="128"
           show-word-limit
         ></el-input>
       </el-form-item>
@@ -284,7 +284,7 @@ export default {
       endLimit2: {
         hours: '23',
         minutes: '59',
-        seconds: '59',
+        seconds: '59'
       },
       ruleForm: {
         orderName: '',
@@ -316,10 +316,10 @@ export default {
           const endTime = new Date(orderEndTime);
           let realTime = orderEndTime;
           if (endTime.getHours() === 0 && endTime.getMinutes() === 0 && endTime.getSeconds() === 0) {
-            realTime = orderEndTime - 8.64e7
+            realTime = orderEndTime - 8.64e7;
           }
-          return (theTime < Date.now() - 8.64e7) || (payDeadline ? theTime > payDeadline : false)
-          || (orderEndTime ? theTime > realTime : false); //
+          return (theTime < Date.now() - 8.64e7) || (payDeadline ? theTime > payDeadline : false) ||
+          (orderEndTime ? theTime > realTime : false); //
         }
       },
       endTimeOption: {
@@ -338,8 +338,8 @@ export default {
           if (payTime.getHours() === 0 && payTime.getMinutes() === 0 && payTime.getSeconds() === 0) {
             payRealTime = payDeadline - 8.64e7;
           }
-          return (orderStartTime ? theTime < realTime  : false)
-          || (payDeadline ? theTime > payRealTime : false);
+          return (orderStartTime ? theTime < realTime : false) ||
+          (payDeadline ? theTime > payRealTime : false);
         }
       }
     };
@@ -354,7 +354,7 @@ export default {
             let before = this.$options.filters['demicrometer'](value.split('.')[0].split(',').join(''));
             let after = value.split('.')[1];
             if (value.split('.')[1].length > 8) {
-              after = value.split('.')[1].slice(0, 8)
+              after = value.split('.')[1].slice(0, 8);
             }
             let arr = [before, after];
             this.ruleForm.quantity = arr.join('.');
@@ -397,12 +397,12 @@ export default {
       }).then(res => {
         this.balanceLoading = false;
         if (res.data.code === '1000') {
-          this.tokenBalance = this.$options.filters.demicrometer(res.data.data || 0); //res.data.data || '--';
+          this.tokenBalance = this.$options.filters.demicrometer(res.data.data || 0); // res.data.data || '--';
         }
       }).catch(() => {
         this.balanceLoading = false;
         this.tokenBalance = '--';
-      })
+      });
     },
     // submit the form
     handleSubmit () {

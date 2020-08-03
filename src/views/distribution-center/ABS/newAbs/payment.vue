@@ -719,7 +719,7 @@ export default {
 </style>
 <style lang="scss">
 .payment {
-  .coupon-rate {
+    .coupon-rate {
       .el-input__suffix {
         right: 10px;
       }
@@ -757,6 +757,12 @@ export default {
       .el-form-item__error {
         left: 200px;
       }
+    }
+    .el-input__prefix {
+      left: 15px;
+    }
+    .el-input--prefix .el-input__inner {
+      padding-left: 40px;
     }
 }
 </style>

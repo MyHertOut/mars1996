@@ -25,6 +25,7 @@ export default {
     position: relative;
     min-height: 100%;
     padding-bottom: 200px;
+    min-width: 1400px;
     /deep/.main-container {
       width: 1200px;
       margin: 20px auto 60px;

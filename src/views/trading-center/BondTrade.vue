@@ -295,10 +295,12 @@ export default {
       this.passwordLoading = false;
       if (data.code === '1000') {
         this.secondaryDialog = false;
-        this.getReceivedList();
-        // this.$router.push({
-        //   name: 'TradeHistory'
-        // });
+        this.$router.push({
+          name: 'TradeOrders',
+          query: {
+            navActive: 0
+          }
+        });
       }
     },
     createConfirm (item) {
@@ -339,7 +341,12 @@ export default {
       this.paymentBtnLoading = false;
       if (res.code === '1000') {
         this.paymentDialog = false;
-        this.getReceivedList();
+        this.$router.push({
+          name: 'TradeOrders',
+          query: {
+            navActive: 0
+          }
+        });
       }
     },
     handleKeyWord (str) {

@@ -167,7 +167,7 @@ export default {
   methods: {
     formatCoupon (num) {
       if (num) {
-        return toFixeds(parseFloat(num), 2, false);
+        return parseFloat(num);
       } else {
         return '--';
       }

@@ -197,7 +197,7 @@ export default {
       if (this.currentData.certType) {
         return this.currentData.certType === 'Certificate' ? 1 : 2;
       } else {
-        return 3;
+        return this.menuKey === '0' ? '' : 3;
       }
     }
   },

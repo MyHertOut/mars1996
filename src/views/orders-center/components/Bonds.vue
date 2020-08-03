@@ -319,6 +319,6 @@ export default {
 .review-btn {
   width: 80px;
   height: 32px;
-  padding: 8px 16px;
+  padding: 0px 0px;
 }
 </style>

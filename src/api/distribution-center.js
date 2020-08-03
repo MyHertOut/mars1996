@@ -278,6 +278,7 @@ export function detailAbsRedeemRecord (config) {
   });
 };
 
+
 /**
  * bonds detail basic--redemption
  * @param {*} config

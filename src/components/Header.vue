@@ -12,36 +12,36 @@
           mode="horizontal"
           @select="handleSelect"
         >
-        <template v-if="roleName.includes(roleObj.issuer)">
-          <el-menu-item
-            v-for="item in issuerMenus"
-            :key="item.index"
-            :index="item.index"
-            v-permissions="item.permissions"
-          >{{ item.name }}</el-menu-item>
-          <!-- <el-menu-item v-permissions="'issuanceCentre.title'" index="/bonds">Issuance Centre</el-menu-item>
+          <template v-if="roleName.includes(roleObj.issuer)">
+            <el-menu-item
+              v-for="item in issuerMenus"
+              :key="item.index"
+              :index="item.index"
+              v-permissions="item.permissions"
+            >{{ item.name }}</el-menu-item>
+            <!-- <el-menu-item v-permissions="'issuanceCentre.title'" index="/bonds">Issuance Centre</el-menu-item>
           <el-menu-item v-permissions="'listing.center'" index="/listing/bonds">Listing Centre</el-menu-item>
-          <el-menu-item v-permissions="'assetServicingCentre.title'" index="/asset-servicing/bonds">Asset Servicing Centre</el-menu-item> -->
-        </template>
-        <template v-else-if="roleName.includes(roleObj.master)">
-          <el-menu-item
-            v-for="item in masterMenus"
-            :key="item.index"
-            :index="item.index"
-            v-permissions="item.permissions"
-          >{{ item.name }}</el-menu-item>
-           <!-- <el-menu-item v-permissions="'organization.title'" index="/userCenter">Organisation Centre</el-menu-item> -->
-        </template>
-        <template v-else-if="roleName.includes(roleObj.investor)">
-          <el-submenu v-for="(item, index) in investorMenus" :key="index" :index="`${index}`">
-            <template slot="title">{{ item.name }}</template>
-            <template v-for="childItem in item.children" >
+            <el-menu-item v-permissions="'assetServicingCentre.title'" index="/asset-servicing/bonds">Asset Servicing Centre</el-menu-item>-->
+          </template>
+          <template v-else-if="roleName.includes(roleObj.master)">
+            <el-menu-item
+              v-for="item in masterMenus"
+              :key="item.index"
+              :index="item.index"
+              v-permissions="item.permissions"
+            >{{ item.name }}</el-menu-item>
+            <!-- <el-menu-item v-permissions="'organization.title'" index="/userCenter">Organisation Centre</el-menu-item> -->
+          </template>
+          <template v-else-if="roleName.includes(roleObj.investor)">
+            <el-submenu popper-append-to-body v-for="(item, index) in investorMenus" :key="index" :index="`${index}`">
+              <template slot="title">{{ item.name }}</template>
+              <template v-for="childItem in item.children">
                 <el-menu-item :key="childItem.index" :index="childItem.index">
                   <router-link :to="childItem.index">{{ childItem.name }}</router-link>
                 </el-menu-item>
-            </template>
-          </el-submenu>
-          <!-- <el-submenu index="2">
+              </template>
+            </el-submenu>
+            <!-- <el-submenu index="2">
             <template slot="title">Subscription Centre</template>
             <el-menu-item index="/subscription" v-permissions="'subscription.centre.bonds'">
               <router-link to="/subscription">Bonds</router-link>
@@ -58,8 +58,8 @@
             <el-menu-item index="/asset-backed-trade" v-permissions="'trade.centre.abs'">
               <router-link to="/asset-backed-trade">Asset-Backed</router-link>
             </el-menu-item>
-          </el-submenu> -->
-        </template>
+            </el-submenu>-->
+          </template>
         </el-menu>
         <el-menu
           :default-active="activeIndex"
@@ -88,28 +88,25 @@
         </el-menu>
         <div class="account" v-if="$route.meta.noLogin">
           <!-- <div class="login">Login</div>
-          <div class="register">Sign Up</div> -->
+          <div class="register">Sign Up</div>-->
         </div>
         <div class="user" v-else v-permissions="'member.manage.title'">
-          <el-popover
-            placement="top-start"
-            popper-class="user-info-box"
-            trigger="hover">
+          <el-popover placement="top-start" popper-class="user-info-box" trigger="hover">
             <div class="user-infoBase">
               <p class="infoBase-email">{{userInfo.userName}}</p>
               <p class="infoBase-uid">UID: {{userInfo.userId}}</p>
             </div>
             <div class="user-info">
               <p v-permissions="'member.account.title'" @click="goAccountSec">
-                <img src="../assets/images/accSafte-icon.png" alt="">
+                <img src="../assets/images/accSafte-icon.png" alt="account" width="22" height="22" />
                 <span>Account & Security</span>
               </p>
               <p v-permissions="'member.address.title'" @click="goAddressCentre">
-                <img src="../assets/images/address-icon.png" alt="">
+                <img src="../assets/images/address-icon.png" alt="address" width="22" height="22" />
                 <span>Address Centre</span>
               </p>
               <p @click="userLogout">
-                <img src="../assets/images/logOut-icon.png" alt="">
+                <img src="../assets/images/logOut-icon.png" alt="logout" width="22" height="22" />
                 <span>Log Out</span>
               </p>
             </div>
@@ -130,7 +127,7 @@
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>English</el-dropdown-item>
           </el-dropdown-menu>
-        </el-dropdown> -->
+        </el-dropdown>-->
       </template>
     </div>
   </div>
@@ -308,7 +305,7 @@ export default {
       }
       .name {
         font-size: 18px;
-        color: #001F3B;
+        color: #001f3b;
         width: 150px;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -322,7 +319,7 @@ export default {
       justify-content: space-between;
       align-items: center;
       &::after {
-        content: '';
+        content: "";
         clear: both;
         width: 0px;
         height: 0px;
@@ -342,8 +339,8 @@ export default {
       }
       .register {
         background-color: #fff;
-        color: #2F39E3;
-        border-radius:2px;
+        color: #2f39e3;
+        border-radius: 2px;
       }
     }
   }
@@ -359,9 +356,9 @@ export default {
 <style lang="scss">
 .user-info-box {
   padding: 0 !important;
-  .user-infoBase{
+  .user-infoBase {
     padding: 20px 20px 5px;
-    .infoBase-email{
+    .infoBase-email {
       font-family: Calibri;
       font-size: 14px;
       color: #192231;
@@ -369,10 +366,10 @@ export default {
       line-height: 14px;
       margin-bottom: 6px;
     }
-    .infoBase-uid{
+    .infoBase-uid {
       font-family: Calibri;
       font-size: 12px;
-      color: #67696C;
+      color: #67696c;
       letter-spacing: 0;
       line-height: 12px;
     }
@@ -382,15 +379,15 @@ export default {
     flex-direction: column;
     p {
       padding: 13px 20px;
-      border-bottom: 1px solid #F9FBFF;
+      border-bottom: 1px solid #f9fbff;
       cursor: pointer;
-      transition: all .2s;
+      transition: all 0.2s;
       color: #192231;
       font-size: 14px;
       display: flex;
       align-items: center;
       &:hover {
-        background-color: #F9FBFF;
+        background-color: #f9fbff;
         color: #214285;
       }
       & + p {
@@ -404,7 +401,7 @@ export default {
     }
   }
 }
-.el-menu--horizontal>.el-submenu.is-active .el-submenu__title {
+.el-menu--horizontal > .el-submenu.is-active .el-submenu__title {
   border-bottom-color: #214285;
 }
 </style>

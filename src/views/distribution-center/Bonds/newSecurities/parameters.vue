@@ -32,7 +32,7 @@
         <el-input v-model.trim="ruleForm.code" autocomplete="off" maxlength="32" placeholder="Please enter the security code"></el-input>
       </el-form-item>
       <el-form-item label="Security Name：" prop="name">
-        <el-input v-model="ruleForm.name" autocomplete="off" maxlength="64" placeholder="Please enter the security name"></el-input>
+        <el-input v-model.trim="ruleForm.name" autocomplete="off" maxlength="64" placeholder="Please enter the security name"></el-input>
       </el-form-item>
       <el-form-item label="Issuer Name：" prop="issuerName">
         <el-input v-model="ruleForm.issuerName" autocomplete="off" maxlength="32" placeholder="Please enter the name of the issuer"></el-input>
@@ -88,10 +88,10 @@
         class="identifier-code-box"
       >
         <el-input
-          v-model="ruleForm.uniqueIdentifierCode"
+          v-model.trim="ruleForm.uniqueIdentifierCode"
           @blur="$refs.uniqueForm.rules.uniqueIdentifierCode[0].required = false;"
           autocomplete="off"
-          maxlength="256"
+          maxlength="16"
           :disabled="ruleForm.identifierCodeList.length >= 10"
         ></el-input>
         <div class="add-rating" @click="addUnique" v-if="ruleForm.identifierCodeList.length < 10">
@@ -136,7 +136,7 @@ export default {
       }
     },
     'ruleForm.name': function (n, o) {
-      if (notChineseReg.test(this.ruleForm.name) || n === '') {
+      if (/^[0-9a-zA-Z]+$/.test(this.ruleForm.name) || n === '') {
         this.ruleForm.name = n;
       } else {
         this.ruleForm.name = o;
@@ -280,8 +280,8 @@ export default {
       }
     },
     async getSMTCode () {
-      const data = await getSecuritySMTInfo();
-      if (data.code === '1000') {
+      const data = await getSecuritySMTInfo().catch(() => {});
+      if (data && data.code === '1000') {
         this.smtCodeList = data.data;
       }
     },

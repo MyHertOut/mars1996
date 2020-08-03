@@ -171,7 +171,7 @@ export default {
   }
   /deep/.sort-field {
     display: flex;
-    margin-left: 10px;
+    // margin-left: 10px;
     li {
       margin-right: 20px;
       cursor: pointer;

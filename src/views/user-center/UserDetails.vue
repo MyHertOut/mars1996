@@ -119,6 +119,7 @@ export default {
       statusRules: {
         status: [{ required: true, message: 'This field is required.', trigger: 'change' }]
       },
+      breadData: [],
       searchParam: {
         page: 1
       },
@@ -144,7 +145,6 @@ export default {
         label: 'Status',
         isSlot: true
       }],
-      breadData: [],
       emailStatus: 1,
       isLoadingEmail: false,
       emailTimer: null,
@@ -405,7 +405,6 @@ export default {
       .content-item{
         width: 25%;
         .contentItem-label{
-          font-family: PingFangSC-Light;
           font-size: 14px;
           color: #616367;
           margin-bottom: 9px;

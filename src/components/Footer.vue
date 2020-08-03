@@ -3,7 +3,7 @@
     <div class="footer__content">
       <div class="left">
         <img src="../assets/images/footer-logo.png" alt="logo" />
-        <p class="copyright">STACS &copy; All Rights Reserved.</p>
+        <p class="copyright">&copy; 2020 Settlity. All Rights Reserved.</p>
       </div>
       <div class="right">
          <div class="language-box">

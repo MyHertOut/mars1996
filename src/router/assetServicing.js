@@ -33,4 +33,14 @@ export default [{
   name: 'AssetServiceCouponViewDetail',
   meta: { isLogin: true },
   component: () => import(/* webpackChunkName: "asset-servicing" */ '@/views/asset-servicing/DisbusementDetail.vue')
+}, {
+  path: '/asset-servicing/bonds/detail',
+  name: 'AssetservicingBondsDetail',
+  meta: { opType: 'bondsDetail', isLogin: true },
+  component: () => import(/* webpackChunkName: "distribution-center" */ '@/views/distribution-center/Bonds/BondsDetail.vue')
+}, {
+  path: '/asset-servicing/asset/detail',
+  name: 'AssetservicingAssetDetail',
+  meta: { opType: 'abs', isLogin: true },
+  component: () => import(/* webpackChunkName: "distribution-center" */ '@/views/distribution-center/ABS/Detail.vue')
 }];

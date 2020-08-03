@@ -29,7 +29,7 @@
         <element-table :columns="columns" :data="data"
           pager :pageTotal="pageTotal" :pageIndex="searchParam.page" @handleChangePage="handleChangePage">
           <template v-slot:edit="{row}">
-            <span  @click="goDetail(row)" v-permissions="'organization.account.details'" style="color:#214285;cursor: pointer;">Details</span>
+            <span class="link-txt"  @click="goDetail(row)" v-permissions="'organization.account.details'" style="color:#214285;cursor: pointer;">Details</span>
           </template>
           <template v-slot:registerStatus="{row}">
             <span style="color:#F1A22B;" v-if="row.registerStatus === 0">Process</span>

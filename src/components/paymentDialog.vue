@@ -9,7 +9,7 @@
         </div>
         <div class="collection-info">
           <p class="collection-title">Collection Information:</p>
-          <p class="collection-value">{{data.offerPaymentInfo}}</p>
+          <pre class="collection-value">{{data.offerPaymentInfo ? data.offerPaymentInfo : '--'}}</pre>
         </div>
         <div class="note">
           <p class="note-title">Payment Note:</p>
@@ -159,7 +159,7 @@ export default {
     .payment-info {
       width: 100%;
       height: 128px;
-      // background: url()
+      background: url(../assets/images/pay-bg.png) no-repeat center center;
       background-color: #234fb9;
       border-radius: 8px;
       padding: 30px 0;
@@ -183,7 +183,8 @@ export default {
       .collection-value {
         margin-top: 17px;
         border: 1px solid #D8D8D8;
-        padding: 12px 15px;
+        padding: 11px 15px;
+        border-radius: 8px;
       }
     }
     .note {
@@ -206,6 +207,8 @@ export default {
         }
         .file-opration {
           cursor: pointer;
+          display: flex;
+          align-items: center;
         }
       }
       .file-list {

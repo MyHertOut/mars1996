@@ -88,7 +88,7 @@ import {
   assetDistributeRetryDetail, distributeRetrySubmit
 } from '@/api/asset-servicing.js';
 import { getAssetBalance } from '@/api/common.js';
-import { notify, numberExcludeZeroEight, encryptSecondPwd, removeComma } from '@/common/util.js';
+import { notify, numberExcludeZeroEight ,encryptSecondPwd, removeComma } from '@/common/util.js';
 import { snapShotTypeEnum } from '@/common/enums.js';
 
 export default {

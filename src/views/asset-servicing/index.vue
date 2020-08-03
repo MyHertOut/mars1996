@@ -56,7 +56,7 @@
           >Coupon Payout</el-button>
         </template>
         <template v-slot:couponRate="{ prop, row }">
-          <span class="mark-red" v-if="row[prop]">{{ row[prop] | demicrometer }} %</span>
+          <span class="mark-red" v-if="row[prop]">{{ parseFloat(row[prop]) }} %</span>
         </template>
       </custom-table>
       <!-- <component v-loading="loading" :is="currentView" :data="tableData"></component> -->
@@ -103,7 +103,7 @@ const defaultSortFields = [{
   name: 'Redemption Date'
 }];
 export default {
-  name: 'DistributeBondsIndex',
+  name: 'AssetServicingIndex',
   data () {
     return {
       loading: false,
@@ -268,7 +268,7 @@ export default {
     // 点击每行
     handleRowClick (row) {
       this.$router.push({
-        path: `/issuance/${this.currentView}/detail`,
+        path: `/asset-servicing/${this.currentView}/detail`,
         query: {
           t: 'ase', // 发行债券列表详情目前跟资产中心列表详情共用
           serialNo: row.serialNo,

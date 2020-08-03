@@ -98,7 +98,7 @@
 </template>
 <script>
 import { multiAddresses, preOfferOrder, queryDigitalCurrency, getBalance, getAssetToken } from '@/api';
-import { notify } from '@/common/util';
+import { notify, numberExcludeZeroEight } from '@/common/util';
 const initCurrency = [
   { currencyName: 'CertificateSGD', currencyCode: 'SGD' },
   { currencyName: 'CertificateUSD', currencyCode: 'USD' },
@@ -108,6 +108,13 @@ const initCurrency = [
 export default {
   name: 'NewTradeBasic',
   data () {
+    const validAddress = (rule, value, callback) => {
+      if (value.length < 40 || value.length > 40) {
+        callback(new Error('The length has to be 40'));
+      } else {
+        callback();
+      }
+    };
     return {
       ruleForm: {
         tokenCode: '',
@@ -133,7 +140,7 @@ export default {
         tokenCode: [{ required: true, message: 'This field cannot be empty', trigger: 'change' }],
         userAddress: [{ required: true, message: 'This field cannot be empty', trigger: 'change' }],
         quantity: [{ required: true, message: 'This field cannot be empty', trigger: 'blur' }],
-        bidAddress: [{ required: true, message: 'This field cannot be empty', trigger: 'blur' }],
+        bidAddress: [{ required: true, message: 'This field cannot be empty', trigger: 'blur' }, { validator: validAddress, trigger: 'change' }],
         paymentType: [{ required: true, message: 'This field cannot be empty', trigger: 'blur' }],
         orderStartTime: [{ required: true, message: 'This field cannot be empty', trigger: 'blur' }],
         orderEndTime: [{ required: true, message: 'This field cannot be empty', trigger: 'blur' }],
@@ -185,6 +192,11 @@ export default {
         this.getToken();
       }
     },
+    'ruleForm.price': function (n, o) {
+      if (n && !numberExcludeZeroEight.test(n)) {
+        this.ruleForm.price = o;
+      }
+    },
     'ruleForm.currencyType': function (n, o) {
       this.getToken();
     },
@@ -233,8 +245,15 @@ export default {
         this.endDefalutV = new Date(n.getTime() + 300000);
         this.ruleForm.orderEndTime = '';
       }
+    },
+    submitData (n, o) {
+      if (n) {
+        this.ruleForm = Object.assign({}, n);
+        this.$refs.ruleForm.clearValidate();
+      }
     }
   },
+  props: ['submitData'],
   methods: {
     startTimeFocus () {
       let currentDate = new Date();

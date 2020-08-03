@@ -98,7 +98,7 @@
 </template>
 <script>
 import { multiAddresses, absPreOfferOrder, queryDigitalCurrency, getBalance, getAssetToken } from '@/api';
-import { notify } from '@/common/util';
+import { notify, numberExcludeZeroEight } from '@/common/util';
 const initCurrency = [
   { currencyName: 'CertificateSGD', currencyCode: 'SGD' },
   { currencyName: 'CertificateUSD', currencyCode: 'USD' },
@@ -108,6 +108,13 @@ const initCurrency = [
 export default {
   name: 'NewTradeBasic',
   data () {
+    const validAddress = (rule, value, callback) => {
+      if (value.length > 40) {
+        callback(new Error('1111'));
+      } else {
+        callback();
+      }
+    };
     return {
       ruleForm: {
         tokenCode: '',
@@ -133,7 +140,7 @@ export default {
         tokenCode: [{ required: true, message: 'This field cannot be empty', trigger: 'change' }],
         userAddress: [{ required: true, message: 'This field cannot be empty', trigger: 'change' }],
         quantity: [{ required: true, message: 'This field cannot be empty', trigger: 'blur' }],
-        bidAddress: [{ required: true, message: 'This field cannot be empty', trigger: 'blur' }],
+        bidAddress: [{ required: true, message: 'This field cannot be empty', trigger: 'blur' }, { validator: validAddress, trigger: 'change' }],
         paymentType: [{ required: true, message: 'This field cannot be empty', trigger: 'blur' }],
         orderStartTime: [{ required: true, message: 'This field cannot be empty', trigger: 'blur' }],
         orderEndTime: [{ required: true, message: 'This field cannot be empty', trigger: 'blur' }],
@@ -188,6 +195,11 @@ export default {
     'ruleForm.currencyType': function (n, o) {
       this.getToken();
     },
+    'ruleForm.price': function (n, o) {
+      if (n && !numberExcludeZeroEight.test(n)) {
+        this.ruleForm.price = o;
+      }
+    },
     'ruleForm.orderEndTime': function (n, o) {
       if (n) {
         let satrtTime = this.ruleForm.orderStartTime;
@@ -237,6 +249,7 @@ export default {
     submitData (n, o) {
       if (n) {
         this.ruleForm = Object.assign({}, n);
+        this.$refs.ruleForm.clearValidate();
       }
     }
   },

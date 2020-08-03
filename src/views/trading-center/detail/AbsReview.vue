@@ -81,6 +81,11 @@ export default {
   watch: {
     submitData (n, o) {
       this.detail = n;
+    },
+    secondaryDialog (n, o) {
+      if (!n) {
+        this.ruleForm.paymentPassword = '';
+      }
     }
   },
   props: ['submitData'],

@@ -58,9 +58,10 @@
             <el-button class="review-btn" @click="handleView(row)">View</el-button>
           </template>
           <template v-slot:batchTxId="{ row }">
-            <a class="link-txt" :href="blockBrowserTxId(row['batchTxId'])" target="_blank">
+            <a v-if="row['batchTxId']" class="link-txt" :href="blockBrowserTxId(row['batchTxId'])" target="_blank">
               {{ row['batchTxId'] }}
             </a>
+            <span v-else>--</span>
           </template>
         </element-table>
         <div class="return-btn">
@@ -114,7 +115,7 @@ export default {
           label: 'Holders Qty',
           prop: 'holderQty',
           formatter: (row, column, cellValue, index) => {
-            return cellValue ? `Total ${this.$options.filters.demicrometer(cellValue)}` : '--';
+            return cellValue ? (!row.status ? '--' : `Total ${this.$options.filters.demicrometer(cellValue)}`) : '--';
           }
         }, {
           label: 'Disbursement Amount',
@@ -135,12 +136,17 @@ export default {
       ],
       breadData: [{
         name: 'Asset Servicing Centre',
-        to: '/asset-servicing'
+        to: '/asset-servicing/bonds'
       }, {
         name: 'Coupon Payments',
         to: {
-          path: '/asset-servicing/asset/coupon',
-          query: { code: this.$route.query.code, tokenType: 2 }
+          path: this.$route.query.type === 'bonds' ? '/asset-servicing/bonds/coupon' : '/asset-servicing/asset/coupon',
+          query: {
+            code: this.$route.query.code,
+            tokenType: this.$route.query.type === 'bonds' ? 0 : 2,
+            snapshotNo: this.$route.query.snapshotNo,
+            serialNo: this.$route.query.snapshotNo
+          }
         }
       }, {
         name: 'Details'

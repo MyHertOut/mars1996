@@ -84,6 +84,18 @@ export default {
     /deep/ .el-button {
       height: 32px;
     }
+    /deep/.btn-light {
+      .el-icon-arrow-down {
+        transform: rotateZ(0deg);
+        transition: all .3s;
+      }
+      &:hover {
+        .el-icon-arrow-down {
+          transform: rotateZ(180deg);
+          transition: all .3s;
+        }
+      }
+    }
   }
   .dropdown-publish {
     margin-left: 30px;

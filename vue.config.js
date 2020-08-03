@@ -11,9 +11,9 @@ module.exports = {
     open: true, // 配置自动启动浏览器
     proxy: { // 配置多个跨域
       '/api': {
-        target: 'https://test-smt-matrix-web.primeledger.cn',
+        // target: 'https://test-smt-matrix-web.primeledger.cn',
         // target: 'http://192.168.58.2:18080', // ye zai yongs
-        // target: 'http://10.200.174.52:31165', // dev
+        target: 'http://10.200.174.52:31165', // dev
         // target: 'http://192.168.58.76:18080', // lijian
         // target: 'http://192.168.58.29:18080', // xiangyi
         changeOrigin: true,

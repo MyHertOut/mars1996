@@ -2,58 +2,12 @@
   <div class="documents" v-loading="loading">
     <el-row>
       <el-col :span="10"><div class="label">Documents (Public):</div></el-col>
-      <el-col :span="23">
-        <el-table :data="publicData" style="width: 100%" class="tabel">
-          <template  v-for="(val, key) in publicColumn">
-            <el-table-column :prop="val.prop" :label="val.label" :key="key" v-if="val.prop === 'operating'">
-              <template slot-scope="scope">
-                <div class="operating-btn">
-                  <span @click="viewImg(scope.row)">View</span>
-                  <span @click="downloadFile(scope.row)">Download</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column :prop="val.prop" :label="val.label" :key="key" v-else-if="val.prop === 'suffix'">
-              <template slot-scope="scope">
-                <div class="file-type">
-                  <img src="../../../assets/images/PDF.png" alt="logo" v-if="retuenImgType(scope.row.suffix) === 'pdf'" />
-                  <img src="../../../assets/images/JPG.png" alt="logo" v-else />
-                  <span>{{scope.row.name + '.' + scope.row.suffix}}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column :prop="val.prop" :label="val.label" :key="key" v-else></el-table-column>
-          </template>
-        </el-table>
-      </el-col>
     </el-row>
-    <el-row v-if="false">
+    <picture-item :data="documentPrivacyList" />
+    <el-row v-if="type === 1">
       <el-col :span="10"><div class="label">Documents (Private):</div></el-col>
-      <el-col :span="23">
-        <el-table :data="privateData" style="width: 100%" class="tabel">
-          <template  v-for="(val, key) in privateColumn">
-            <el-table-column :prop="val.prop" :label="val.label" :key="key" v-if="val.prop === 'operating'">
-              <template slot-scope="scope">
-                <div class="operating-btn">
-                  <span @click="viewImg(scope.row)">View</span>
-                  <span @click="downloadFile(scope.row)">Download</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column :prop="val.prop" :label="val.label" :key="key" v-else-if="val.prop === 'suffix'">
-              <template slot-scope="scope">
-                <div class="file-type">
-                  <img src="../../../assets/images/PDF.png" alt="logo" v-if="retuenImgType(scope.row.suffix) === 'pdf'" />
-                  <img src="../../../assets/images/JPG.png" alt="logo" v-else />
-                  <span>{{scope.row.name + '.' + scope.row.suffix}}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column :prop="val.prop" :label="val.label" :key="key" v-else></el-table-column>
-          </template>
-        </el-table>
-      </el-col>
     </el-row>
+    <picture-item :data="documentPublicList" v-if="type === 1"/>
     <div class="image__preview">
       <el-image :previewSrcList="previewSrcList" ref="preview"></el-image>
     </div>
@@ -61,44 +15,25 @@
 </template>
 <script>
 import { getAbsDocument } from '@/api';
+import PictureItem from '@/components/PictureItem.vue';
 import { notify } from '@/common/util';
 
 export default {
   name: 'Doccuments',
   data () {
     return {
-      publicColumn: [
-        {
-          label: 'First name',
-          prop: 'name'
-        }, {
-          label: 'File Type',
-          prop: 'suffix'
-        }, {
-          label: 'Operating',
-          prop: 'operating'
-        }
-      ],
-      previewSrcList: [],
-      publicData: [],
-      privateColumn: [
-        {
-          label: 'First name',
-          prop: 'name'
-        }, {
-          label: 'File Type',
-          prop: 'suffix'
-        }, {
-          label: 'Operating',
-          prop: 'operating'
-        }
-      ],
-      privateData: [],
-      loading: false
+      loading: false,
+      documentPrivacyList: [],
+      documentPublicList: [],
+      previewSrcList: []
     };
   },
+  props: ['type'],
   created () {
     this.getInfo();
+  },
+  components: {
+    'picture-item': PictureItem
   },
   methods: {
     async getInfo () {
@@ -111,9 +46,19 @@ export default {
         notify: notify.error
       });
       this.loading = false;
-      if (data.data) {
-        this.publicData = data.data.publicDocs;
-        this.privateData = data.data.privateDocs;
+      if (data.data.data) {
+        if (data.data.data.privateDocs) {
+          this.documentPrivacyList = data.data.data.privateDocs;
+          this.documentPrivacyList.forEach(v => {
+            v.src = '/v1/asset/file/readFile?id=' + v.id;
+          });
+        }
+        if (data.data.data.publicDocs) {
+          this.documentPublicList = data.data.data.publicDocs;
+          this.documentPublicList.forEach(v => {
+            v.src = '/v1/asset/file/readFile?id=' + v.id;
+          });
+        }
       }
     },
     downloadFile (row) {
@@ -123,8 +68,12 @@ export default {
       down.click();
     },
     viewImg (row) {
-      this.previewSrcList = ['/v1/asset/file/readFile?id=' + row.id];
-      this.$refs.preview.showViewer = true;
+      if (row.suffix === 'pdf') {
+        window.open('/v1/asset/file/readFile?id=' + row.id, '_blank');
+      } else {
+        this.previewSrcList = ['/v1/asset/file/readFile?id=' + row.id];
+        this.$refs.preview.showViewer = true;
+      }
     },
     retuenImgType (type) {
       if (type === 'pdf') {

@@ -274,7 +274,7 @@
             rows="4"
             placeholder="Please enter additional information, payment instruction etc."
             v-model="ruleForm.content"
-            maxlength="500"
+            maxlength="128"
             show-word-limit
           ></el-input>
         </el-form-item>
@@ -288,7 +288,7 @@
             rows="4"
             placeholder="Please enter the payment Instruction"
             v-model="ruleForm.paymentInfo"
-            maxlength="500"
+            maxlength="128"
             show-word-limit
           ></el-input>
         </el-form-item>
@@ -311,6 +311,7 @@
     <element-dialog
       :visible.sync="secondPwdDialogVisible"
       v-loading="secondaryPwdloading"
+      width="640px"
       @close="$refs.secondPwdForm.resetFields()"
     >
       <el-form ref="secondPwdForm" :model="secondPwdForm" :rules="secondPwdRules"
@@ -896,7 +897,7 @@ export default {
           this.$router.push({
             name: 'ProjectIssuanceHistory',
             query: {
-              type: this.$route.query.current || 'bonds'
+              type: this.$route.meta.current || 'bonds'
             }
           });
         }
@@ -1098,7 +1099,7 @@ export default {
     button {
       width: 300px;
       height: 40px;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: normal;
       span {
         opacity: 0.8;
@@ -1106,9 +1107,6 @@ export default {
     }
     .el-button--primary {
       margin-left: 30px;
-    }
-    .btn-back {
-      color: #2f39e3;
     }
   }
   .form-box {
@@ -1121,6 +1119,9 @@ export default {
   .el-date-editor--daterange.el-input__inner,
   .el-date-editor.el-input {
     width: 100%;
+    .el-input__inner {
+      padding-left: 40px;
+    }
   }
   .el-date-editor--datetimerange.el-input__inner {
     width: 100%;
@@ -1148,6 +1149,12 @@ export default {
     i {
       line-height: inherit;
     }
+  }
+  /deep/.el-input__prefix {
+    left: 15px;
+  }
+  /deep/.el-input--prefix .el-input__inner {
+    padding-left: 40px;
   }
 }
 </style>

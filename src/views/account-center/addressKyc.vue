@@ -382,17 +382,17 @@ export default {
             resData.forEach(val => {
               let countryObj = this.countryList.find(v => {
                 return val.country === v.shortName;
-              });
+              })
               if (countryObj) {
                 val.countryName = countryObj.enName;
               }
               let residencyObj = this.countryList.find(v => {
                 return val.residency === v.shortName;
-              });
+              })
               if (residencyObj) {
                 val.residencyName = residencyObj.enName;
               }
-            });
+            })
             this.kycDialogIndividualData = resData;
           }
         }
@@ -431,15 +431,15 @@ export default {
       if (this.currentKycItem && this.currentKycItem.bdId) return;
       const countryNameArr = this.countryList.filter(val => {
         if (this.nationalityItemObj.country === val.shortName || this.nationalityItemObj.residency === val.shortName) {
-          return val;
+          return val
         }
       });
-      if (countryNameArr.length === 1) {
+      if (countryNameArr.length === 1 ) {
         this.nationalityItemObj.countryName = countryNameArr[0].enName;
-        this.nationalityItemObj.residencyName = countryNameArr[0].enName;
+        this.nationalityItemObj.residencyName = countryNameArr[0].enName
       } else {
         this.nationalityItemObj.countryName = countryNameArr[0].enName;
-        this.nationalityItemObj.residencyName = countryNameArr[1].enName;
+        this.nationalityItemObj.residencyName = countryNameArr[1].enName
       }
       const { country, investorType, risk, residency, countryName, residencyName } = this.nationalityItemObj;
       const filter = this.kycDialogIndividualData.filter(val => {

@@ -5,7 +5,7 @@
       :selData="selData"
       :nosort="true"
       @handleKeyWord="handleKeyWord"
-      :keyWordPlaceholder="'Enter Asset Code / Asset Name'"
+      :keyWordPlaceholder="'Enter Asset Code'"
     >
       <template v-slot:append>
         <el-select v-model="searchParam.bussType" @change="typeChange">
@@ -25,9 +25,9 @@
       @handleChangePage="handleChangePage"
     >
       <template v-slot:assetType="{row}">
-        <span v-if="row.assetType === 1">Bonds</span>
-        <span v-else-if="row.assetType === 2">Digital Currency</span>
-        <span v-else-if="row.assetType === 3">Certificate</span>
+        <span v-if="row.assetType === 1">Bond</span>
+        <span v-else-if="row.assetType === 2 || row.assetType === 3">Currency</span>
+        <span v-else-if="row.assetType === 4">Asset-Backed</span>
         <span v-else>--</span>
       </template>
       <template v-slot:bussType="{row}">

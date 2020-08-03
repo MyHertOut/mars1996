@@ -78,9 +78,9 @@
             <div class="msgOne">User Account Submitted.</div>
             <div class="msgTwo">Please wait patiently while the account is in creation.</div>
             <div class="msgThrid">
-              <div class="msgThrid-item" @click="$router.push({path: '/userCenter'})">Org Centre</div>
-              <div class="msgThrid-item" @click="reCreate">Create User</div>
-              <div class="msgThrid-item" @click="$router.push({path: '/userCenter/createRecord'})">View Progress</div>
+              <el-button class="btn-linkto" @click="$router.push({path: '/userCenter'})">Org Centre</el-button>
+              <el-button class="btn-linkto" @click="reCreate">Create User</el-button>
+              <el-button class="btn-linkto" @click="$router.push({path: '/userCenter/createRecord'})">View Progress</el-button>
             </div>
           </div>
         </div>
@@ -332,8 +332,7 @@ export default {
         color: #497EB9;
         line-height: 20px;
         display: flex;
-        .msgThrid-item{
-          border-bottom: 1px solid #497EB9;
+        .btn-linkto{
           &:nth-child(2){
             margin: 0 60px;
           }

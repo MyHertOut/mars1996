@@ -93,7 +93,7 @@
 </template>
 <script>
 import { formatDate } from '@/common/util.js';
-import { redeemStatusList, redeemList, absRedemption } from '@/api/asset-servicing.js';
+import { redeemStatusList, redeemList ,absRedemption, redeemBySecurityCode } from '@/api/asset-servicing.js';
 import RedemFreezeDialog from './component/RedemFreezeDialog.vue';
 import RedemDialog from './component/RedemDialog.vue';
 import { redemptionStatusEnum } from '@/common/enums.js';

@@ -14,9 +14,11 @@
     </el-row>
     <el-row :gutter="20">
         <el-col :span="4"><div class="sub-title">Min Purchase：</div></el-col>
-        <el-col :span="8"><div class="grid-content">{{ detailData.minQuantityOnce | demicrometer }}</div></el-col>
+        <el-col :span="8" v-if="detailData.tradeType === 1"><div class="grid-content">{{ detailData.quantity | demicrometer }}</div></el-col>
+        <el-col :span="8" v-else><div class="grid-content">{{ detailData.minQuantityOnce | demicrometer }}</div></el-col>
         <el-col :span="4"><div class="sub-title">Max Purchase：</div></el-col>
-        <el-col :span="6"><div class="grid-content">{{ detailData.maxQuantityPer | demicrometer }}</div></el-col>
+        <el-col :span="6" v-if="detailData.tradeType === 1"><div class="grid-content">{{ detailData.quantity | demicrometer }}</div></el-col>
+        <el-col :span="6" v-else><div class="grid-content">{{ detailData.maxQuantityPer | demicrometer }}</div></el-col>
     </el-row>
     <el-row :gutter="20">
         <el-col :span="4"><div class="sub-title">Currency：</div></el-col>
@@ -57,7 +59,7 @@
         <el-col :span="4"><div class="sub-title">Subscription Info：</div></el-col>
         <el-col :span="19">
             <div class="grid-content">
-            {{ detailData.content }}
+            <pre>{{ detailData.content }}</pre>
             </div>
         </el-col>
     </el-row>

@@ -111,14 +111,14 @@ export default {
       // 排序字段数组
       sortFields: [...defaultSortFields],
       subMenus: [{
-        name: 'Bond Project',
+        name: 'Bonds',
         key: 'bonds',
         permissions: 'listing.center.projects',
         to: {
           path: '/listing/bonds'
         }
       }, {
-        name: 'ABS Project',
+        name: 'Asset-Backed',
         key: 'asset',
         permissions: 'listing.center.abs.projects',
         to: {

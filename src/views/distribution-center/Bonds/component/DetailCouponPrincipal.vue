@@ -4,11 +4,14 @@
       <el-col :span="4"><div class="sub-title">Annual Coupon Rate：</div></el-col>
       <el-col :span="8">
         <div class="grid-content">
-          <template v-if="detailData.couponRate">{{ detailData.couponRate | demicrometer }} %</template>
+          <template v-if="detailData.couponRate">{{ parseFloat(detailData.couponRate) }} %</template>
         </div>
       </el-col>
       <el-col :span="4"><div class="sub-title">Coupon Frequency：</div></el-col>
-      <el-col :span="6"><div class="grid-content">{{ detailData.couponFrequency }}</div></el-col>
+      <el-col :span="6">
+        <div class="grid-content" v-if="detailData.couponFrequency">{{ couponFrequencyList.filter(v => v.label === detailData.couponFrequency)[0].label }}</div>
+        <div class="grid-content" v-else>--</div>
+      </el-col>
     </el-row>
     <el-row :gutter="20">
       <el-col :span="4"><div class="sub-title">Coupon Period：</div></el-col>
@@ -80,7 +83,7 @@
 </template>
 
 <script>
-import moment from 'moment';
+import { calculatePeriod } from '@/common/util';
 
 export default {
   name: 'DetailCouponPrincipal',
@@ -97,20 +100,24 @@ export default {
       callableTableColumn: [],
       paymentTableList: [],
       paymentTableColumn: [],
-      paymentTableData: []
+      paymentTableData: [],
+      couponFrequencyList: [{
+        label: 'Quarterly',
+        id: 0
+      }, {
+        label: 'Semi-annually',
+        id: 1
+      }, {
+        label: 'Annually',
+        id: 2
+      }]
     };
   },
   watch: {
     detailData () {
       if (this.detailData.firstSettlementDate && this.detailData.couponPeriods) {
-        let times;
-        if (this.detailData.couponFrequency === '0') {
-          times = 7776000000;
-        } else if (this.detailData.couponFrequency === '1') {
-          times = 15552000000;
-        } else {
-          times = 31104000000;
-        }
+        let fre = this.couponFrequencyList.filter(v => v.label === this.detailData.couponFrequency)[0];
+        let tableDatas = calculatePeriod(new Date(this.detailData.firstSettlementDate), fre.id, this.detailData.couponPeriods);
         for (let i = 0; i < Math.ceil(parseInt(this.detailData.couponPeriods) / 6); i++) {
           this.paymentTableList.push({
             tableColumn: [],
@@ -118,16 +125,17 @@ export default {
           });
         }
         for (let i = 1; i <= parseInt(this.detailData.couponPeriods); i++) {
-          const addTimes = times * i;
           this.paymentTableColumn.push({
             label: i + '/' + this.detailData.couponPeriods,
             prop: i + '/' + this.detailData.couponPeriods,
             width: 155
           });
-          this.paymentTableData.push({
-            [i + '/' + this.detailData.couponPeriods]: moment(new Date(this.detailData.firstSettlementDate).getTime() + addTimes).format('YYYY-MM-DD HH:mm:ss')
-          });
         }
+        this.paymentTableData = tableDatas.map(v => {
+          return {
+            [v.periods]: v.time
+          };
+        });
         const columnArr = [];
         const dataArr = [];
         for (let i = 0; i < this.paymentTableColumn.length; i += 6) {

@@ -46,16 +46,18 @@
       </template>
       <template v-slot:edit="{row}">
         <div class="addressCentre-edit">
-          <span @click="goAsstesBalance(row)">Balance</span>
+          <span class="link-txt" @click="goAsstesBalance(row)">Balance</span>
           <span
             v-if="row.kycStatus === 0"
+            class="link-txt"
             style="margin-left: 16px; color: #ccc; cursor: auto;width:110px;text-align: center;"
           >In Progress</span>
           <span
             v-else-if="row.kycStatus === 1"
             style="margin-left: 16px;width:110px;text-align: center;cursor: pointer;"
             @click="showKycdialog(row)"
-          >View Identity</span>
+            class="link-txt"
+          > View Identity</span>
           <span
             v-else-if="row.kycStatus === 2"
             style="margin-left: 16px; color: #E6471F; cursor: auto;width:110px;text-align: center;"
@@ -293,11 +295,8 @@ export default {
   .addressCentre-edit {
     display: flex;
     align-items: center;
-    justify-content: center;
     > span {
       font-size: 14px;
-      color: #214285;
-      cursor: pointer;
       height: 23px;
       // &:hover{
       //   color: #497EB9;

@@ -22,7 +22,12 @@
       <el-col :span="4"><div class="label">Issuer Rating:</div></el-col>
       <el-col :span="8"><div class="value">{{isEmpty(infoObj.issueRating)}}</div></el-col>
       <el-col :span="4"><div class="label">Debt Seniority:</div></el-col>
-      <el-col :span="8" v-if="infoObj.debtSeniority"><div class="value">{{debtSeniorityList.filter(v => v.value == infoObj.debtSeniority)[0].label}}</div></el-col>
+      <el-col :span="8" v-if="infoObj.debtSeniority">
+        <div class="value" v-if="debtSeniorityList.filter(v => v.value == infoObj.debtSeniority)[0]">
+          {{debtSeniorityList.filter(v => v.value == infoObj.debtSeniority)[0].label}}
+        </div>
+        <div v-else>--</div>
+      </el-col>
       <el-col :span="8" v-else><div class="value">--</div></el-col>
     </el-row>
     <el-row>
@@ -45,7 +50,9 @@
     </el-row>
     <el-row>
       <el-col :span="4"><div class="label">Terms and Conditions:</div></el-col>
-      <el-col :span="19"><div class="value">{{isEmpty(infoObj.acknowledgeTc)}}</div></el-col>
+      <el-col :span="19">
+        <div class="value"><pre>{{isEmpty(infoObj.acknowledgeTc)}}</pre></div>
+      </el-col>
     </el-row>
   </div>
 </template>

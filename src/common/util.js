@@ -179,8 +179,8 @@ export const encryptSecondPwd = (pwd) => {
 };
 
 // 获取距离结束时间有多少天
-export const changeTimeStamp = (time, isCh) => {
-  var distancetime = (new Date(time)) - (new Date());
+export const changeTimeStamp = (time, currentTime = Date.now()) => {
+  var distancetime = time - currentTime;
   if (distancetime > 0) {
     // 如果大于0.说明尚未到达截止时间
     var ss = Math.floor(distancetime % 1000).toString();
@@ -201,7 +201,8 @@ export const changeTimeStamp = (time, isCh) => {
     if (hour < 10 && hour !== 0) {
       hour = '0' + hour;
     }
-    return (days + ' day ' + hour + ' hour ' + min + ' minute ' + sec + ' second');
+    // return (days + ' day ' + hour + ' hour ' + min + ' minute ' + sec + ' second');
+    return (days + ' day ' + hour + ' hour ' + min + ' minute ');
   } else {
     // 若否，就是已经到截止时间了
     return ''

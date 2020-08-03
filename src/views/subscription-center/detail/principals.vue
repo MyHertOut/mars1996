@@ -15,8 +15,15 @@
     <el-row>
       <el-col :span="4"><div class="label">Maturity Date:</div></el-col>
       <el-col :span="8"><div class="value">{{formatTime(infoObj.maturityDate)}}</div></el-col>
-      <el-col :span="4"><div class="label">Redemption Date:</div></el-col>
+      <!-- <el-col :span="4"><div class="label">Redemption Date:</div></el-col> -->
+      <el-col :span="4"><div class="label">Settlement Date:</div></el-col>
       <el-col :span="8"><div class="value">{{formatTime(infoObj.redemptionDate)}}</div></el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="4"><div class="label">Disbursement Token:</div></el-col>
+      <el-col :span="8"><div class="value">{{isEmpty(infoObj.disburseCode)}}</div></el-col>
+      <el-col :span="4"><div class="label">Callable Bond:</div></el-col>
+      <el-col :span="8"><div class="value">{{isEmpty(infoObj.callable)}}</div></el-col>
     </el-row>
     <el-row>
       <el-col :span="4"><div class="label">Coupon Payment Date:</div></el-col>
@@ -32,7 +39,7 @@
 </template>
 <script>
 import { securityDetailCoupon } from '@/api';
-import { notify, formatDate, toFixeds } from '@/common/util';
+import { notify, formatDate } from '@/common/util';
 
 export default {
   name: 'Principals',
@@ -50,7 +57,7 @@ export default {
   methods: {
     formatCoupon (num) {
       if (num) {
-        return toFixeds(parseFloat(num), 2, false);
+        return parseFloat(num);
       } else {
         return '--';
       }

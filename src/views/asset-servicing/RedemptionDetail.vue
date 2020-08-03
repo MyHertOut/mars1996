@@ -11,18 +11,16 @@
       <div class="view-item">
         <p class="head-title">Basic Parameters</p>
         <el-row :gutter="20">
-          <el-col :span="6"><div class="sub-title">Disbursement Token：</div></el-col>
+          <el-col :span="5"><div class="sub-title">Disbursement Token：</div></el-col>
           <el-col :span="6"><div class="grid-content">{{ basicData.tokenCode || '--' }}</div></el-col>
+          <el-col :span="5"><div class="sub-title">Total Holdings：</div></el-col>
+          <el-col :span="6"><div class="grid-content">{{ formatterNum(basicData.holderQty) }}</div></el-col>
         </el-row>
         <el-row :gutter="20">
-          <el-col :span="6"><div class="sub-title">Total Holdings：</div></el-col>
-          <el-col :span="6"><div class="grid-content">{{ formatterNum(basicData.holderQty) }}</div></el-col>
-          <el-col :span="6"><div class="sub-title">Payout Value：</div></el-col>
+          <el-col :span="5"><div class="sub-title">Payout Value：</div></el-col>
           <el-col :span="6"><div class="grid-content">{{ formatterNum(basicData.payAmount) }}</div></el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="6"><div class="sub-title">Disbursement Address (Contract)：</div></el-col>
-          <el-col :span="7">
+          <el-col :span="5"><div class="sub-title">Disbursement Address：</div></el-col>
+          <el-col :span="6">
             <div class="grid-content flex">
               <!-- {{ basicData.disbursementAddr || '--' }} -->
               <template v-if="basicData.disbursementAddr">
@@ -44,6 +42,29 @@
             </div>
           </el-col>
         </el-row>
+        <!-- <el-row>
+          <el-col :span="6"><div class="sub-title">Disbursement Address (Contract)：</div></el-col>
+          <el-col :span="7">
+            <div class="grid-content flex">
+              <template v-if="basicData.disbursementAddr">
+                <a class="link-txt" :href="contractAddress(basicData.disbursementAddr)" target="_blank">
+                  {{ basicData.disbursementAddr }}
+                </a>
+                <img
+                  width="16"
+                  height="16"
+                  src="../../assets/images/copy.png"
+                  alt="icon"
+                  class="copy"
+                  v-clipboard:copy="basicData.disbursementAddr"
+                  v-clipboard:success="copySuccess"
+                  v-clipboard:error="copyError"
+                >
+              </template>
+              <span v-else>--</span>
+            </div>
+          </el-col>
+        </el-row> -->
         <element-table
           pager
           border
@@ -292,6 +313,9 @@ export default {
         .grid-content {
           overflow-wrap: break-word;
           word-break: keep-all;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
         .flex {
           display: flex;

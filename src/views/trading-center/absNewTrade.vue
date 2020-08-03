@@ -23,7 +23,7 @@
               </p>
               <p class="operation">
                 <span @click="$router.push({ name: 'AssetBackedTrade' })">Trade Center</span>
-                <span @click="stepActive = 0;submitData = Object.assign({}, submitData);">Create Trade</span>
+                <span @click="stepActive = 0;submitData = Object.assign({}, reloadData);">Create Trade</span>
                 <span @click="$router.push({ name: 'AbsTradeHistory' })">View Progress</span>
               </p>
             </div>
@@ -52,7 +52,21 @@ export default {
           name: 'New Trade'
         }
       ],
-      submitData: {}
+      submitData: {},
+      reloadData: {
+        tokenCode: '',
+        userAddress: '',
+        quantity: '',
+        bidAddress: '',
+        paymentType: 2,
+        price: '',
+        tokenMark: '',
+        currencyType: 2,
+        currency: '',
+        orderStartTime: '',
+        orderEndTime: '',
+        paymentInfo: ''
+      }
     };
   },
   methods: {

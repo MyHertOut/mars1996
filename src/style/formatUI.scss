@@ -20,6 +20,7 @@
   }
 }
 .el-menu--horizontal>.el-submenu .el-submenu__title {
+  padding: 0 40px 0 0;
   color: #001F3B;
 }
 .el-menu--horizontal>.el-menu-item {
@@ -158,6 +159,7 @@
   padding: 0 20px;
   border-radius: 8px;
   height: 40px;
+  font-size: 16px;
   &.is-plain {
     background: transparent;
     color: #ffffff;
@@ -178,6 +180,9 @@
   }
 }
 .el-input-group__append {
+  border-radius: 8px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
   .el-button--default {
     border-color: transparent !important;
     color: #5A5A5A !important;
@@ -454,7 +459,7 @@
 
 /* 表格样式  开始*/
 .el-table--striped .el-table__body tr.el-table__row--striped td {
-  background-color: #F9FBFF !important;
+  background-color: #FBFBFB !important;
   border-color: #fff;
 }
 
@@ -520,3 +525,9 @@
   }
 }
 /* 表单样式  结束*/
+
+/* 图片预览弹层  开始 */
+.el-icon-circle-close {
+  color: #FFFFFF;
+}
+/* 图片预览弹层  结束 */

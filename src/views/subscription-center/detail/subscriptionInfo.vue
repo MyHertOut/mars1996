@@ -31,7 +31,7 @@
           <li>This bond will mature on March 24, 2020, the same day the system will conduct the repurchase, and the principal part and the income part will be transferred to the User account within the same day.</li>
         </ul>
       </div> -->
-      {{data.content}}
+      <pre>{{data.content}}</pre>
     </div>
   </div>
 </template>
@@ -124,6 +124,13 @@ export default {
       .instructions-page {
         .el-step {
           position: relative;
+          .el-step__icon {
+            width: 14px;
+            height: 14px;
+          }
+          .el-step__line {
+            background-color: #e7e7e7;
+          }
         }
         .is-finish, .is-process {
           font-size: 16px;
@@ -148,12 +155,12 @@ export default {
         .redemption {
           width: 25px;
           .el-step__description {
-            left: -90px;
+            left: -100px;
           }
           .el-step__title {
             width: 150px;
             position: relative;
-            right: 110px;
+            right: 120px;
           }
         }
         .settlement {

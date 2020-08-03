@@ -131,7 +131,7 @@ export default {
           prop: 'edit',
           isSlot: true
         }
-      ]
+      ],
       // breadData: [{
       //   name: 'Issuance Centre',
       //   to: '/bonds'

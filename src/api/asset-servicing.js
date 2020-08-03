@@ -57,6 +57,7 @@ export function absRedemption (data) {
     data
   });
 };
+
 /**
  * redemption
  * @param {*} data

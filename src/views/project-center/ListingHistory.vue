@@ -212,7 +212,7 @@ export default {
 <style lang="scss" scoped>
 .issuance-history {
   .search-bar {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     .el-select {
       width: 170px;
     }

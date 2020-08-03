@@ -86,7 +86,7 @@
         class="identifier-code-box"
       >
         <el-input
-          v-model="ruleForm.uniqueIdentifierCode"
+          v-model.trim="ruleForm.uniqueIdentifierCode"
           @blur="$refs.uniqueForm.rules.uniqueIdentifierCode[0].required = false;"
           autocomplete="off"
           maxlength="16"
@@ -112,7 +112,7 @@
   </div>
 </template>
 <script>
-import { newAbsAdd, getAbsInfo } from '@/api/distribution-center';
+import { newAbsAdd, getAbsInfo, getSecuritySMTInfo } from '@/api/distribution-center';
 import { notify, notChineseReg } from '@/common/util';
 
 export default {
@@ -253,8 +253,8 @@ export default {
       listRules: {
         // issueRating: [{ required: false, trigger: 'blur', message: 'This field is required.' }],
         uniqueIdentifierCode: [{ required: false, trigger: 'blur', message: 'This field is required.' }]
-      }
-      // smtCodeList: ''
+      },
+      smtCodeList: ''
     };
   },
   created () {
@@ -291,12 +291,12 @@ export default {
         this.loading = false;
       }
     },
-    // async getSMTCode () {
-    //   const data = await getSecuritySMTInfo();
-    //   if (data.code === '1000') {
-    //     this.smtCodeList = data.data;
-    //   }
-    // },
+    async getSMTCode () {
+      const data = await getSecuritySMTInfo().catch(() => {});
+      if (data && data.code === '1000') {
+        this.smtCodeList = data.data;
+      }
+    },
     handleNext () {
       this.$refs.ruleForm.validate(async valid => {
         const rating = true;
@@ -308,8 +308,8 @@ export default {
           //   params.issueRating = this.ruleForm.ratingList.map(v => v.value).join(',');
           params.uniqueIdentifierCode = this.ruleForm.identifierCodeList.map(v => v.value).join(',');
           // params.smtCode = this.smtCodeList[0].smtCode;
-          // params.smtCode = this.smtCodeList;
-          // params.investorType = 9;
+          params.smtCode = this.smtCodeList;
+          params.investorType = 9;
           if (this.$route.query.serialNo) {
             params.serialNo = this.$route.query.serialNo;
           }

@@ -46,7 +46,7 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'setSecondaryPwd',
-  props: ['changeType', 'isShow'],
+  props: ['changeType', 'isShow', 'emailSecPwd'],
   created () {
     this.passwordDialog = this.isShow;
   },
@@ -123,7 +123,7 @@ export default {
       if (this.isLoadingEmail) return;
       this.isLoadingEmail = true;
       const data = await sendEmail({
-        data: { email: this.userInfo.email, emailAuthType: 'US' },
+        data: { email: this.emailSecPwd ? this.emailSecPwd : this.userInfo.email, emailAuthType: 'US' },
         needSign: true,
         slient: true,
         notify: notify.any
@@ -172,7 +172,11 @@ export default {
       const res = await updateSecurityPwd({ data, notify: notify.any, slient: true });
       if (res.code === '1000') {
         this.passwordDialog = false;
-        this.reload();
+        if (this.emailSecPwd) {
+          this.$emit('setSecPwd');
+        } else {
+          this.reload();
+        }
       }
       this.loading = false;
     },
@@ -236,7 +240,7 @@ export default {
       padding-bottom: 25px;
     }
     .el-dialog__header {
-      padding: 40px;
+      padding: 40px !important;
       .el-dialog__title {
         font-size: 26px;
         color: #001F3B;

@@ -180,7 +180,7 @@ export default {
       this.copyTipsObj = this.$message({ message: 'Copy the failure', type: 'error' });
     },
     formatterNum (num) {
-      return (!num && num !== 0) ? '--' : this.$options.filters.demicrometer(num);
+      return (!num && num !=0) ? '--' : this.$options.filters.demicrometer(num);
     },
     handleReturn () {
       const { securityCode, serialNo, t } = this.$route.query;

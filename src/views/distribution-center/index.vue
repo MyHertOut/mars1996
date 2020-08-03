@@ -46,7 +46,7 @@
         @handleChangePage="handleChangePage"
       >
         <template v-slot:couponRate="{ prop, row }">
-          <span style="color: #e6471f;" v-if="row[prop]">{{ row.couponRate | demicrometer }} %</span>
+          <span style="color: #e6471f;" v-if="row[prop]">{{ parseFloat(row.couponRate) }} %</span>
         </template>
       </custom-table>
       <!-- <component v-loading="loading" :is="currentView" :data="tableData"></component> -->
@@ -78,6 +78,7 @@ const subHeadMenuEnum = {
   asset: 'asset',
   currency: 'currency'
 };
+// 默认（bonds）排序字段
 const defaultSortFields = [{
   field: 'time',
   name: 'Issuance Time'
@@ -92,7 +93,7 @@ const defaultSortFields = [{
   name: 'Redemption Date'
 }];
 export default {
-  name: 'DistributeBondsIndex',
+  name: 'DistributeIndex',
   data () {
     return {
       loading: false,
@@ -148,7 +149,7 @@ export default {
         }
       }, {
         label: 'Issuance Quantity', // 发行数量
-        prop: 'issuanceQuantity',
+        prop: 'totalIssuanceQuantity',
         formatter: (row, cellValue) => {
           return cellValue ? this.$options.filters.demicrometer(cellValue) : '--';
         }

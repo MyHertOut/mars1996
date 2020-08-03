@@ -2,20 +2,20 @@ export default [{
   path: 'issuance/bonds',
   name: 'IssuanceBondsList',
   meta: { isLogin: true, current: 'bonds', functionCode: 'issuanceCentre.bonds.list' },
-  component: () => import(/* webpackChunkName: "distribution-center" */ '@/views/distribution-center/Bonds/index.vue')
+  component: () => import(/* webpackChunkName: "distribution-center" */ '@/views/distribution-center/index.vue')
 }, {
   path: 'issuance/asset',
   name: 'IssuanceAssetList',
   // functionCode: 'issuanceCentre.bonds.list'
   meta: { isLogin: true, current: 'asset', functionCode: 'issuanceCentre.bonds.list' },
-  component: () => import(/* webpackChunkName: "distribution-center" */ '@/views/distribution-center/Bonds/index.vue')
+  component: () => import(/* webpackChunkName: "distribution-center" */ '@/views/distribution-center/index.vue')
 },
 {
   path: 'issuance/currency',
   name: 'IssuanceCurrencyList',
   // functionCode: 'issuanceCentre.bonds.list'
   meta: { isLogin: true, current: 'currency', functionCode: 'issuanceCentre.bonds.list' },
-  component: () => import(/* webpackChunkName: "distribution-center" */ '@/views/distribution-center/Bonds/index.vue')
+  component: () => import(/* webpackChunkName: "distribution-center" */ '@/views/distribution-center/index.vue')
 },
 {
   path: 'issue',
@@ -130,16 +130,6 @@ export default [{
   name: 'DisBondsDetail',
   meta: { opType: 'bondsDetail', isLogin: true },
   component: () => import(/* webpackChunkName: "distribution-center" */ '@/views/distribution-center/Bonds/BondsDetail.vue')
-},
-{
-  path: 'abs',
-  name: 'DistributABSList',
-  component: () => import(/* webpackChunkName: "distribution-center" */ '@/views/distribution-center/ABS/index.vue')
-},
-{
-  path: 'digital-currency',
-  name: 'DistributDigitalCurrencyList',
-  component: () => import(/* webpackChunkName: "distribution-center" */ '@/views/distribution-center/DigitalCurrency/index.vue')
 }, {
   path: 'issuance/asset/detail',
   name: 'DisAssetDetail',

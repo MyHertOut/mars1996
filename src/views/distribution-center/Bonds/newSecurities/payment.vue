@@ -622,7 +622,7 @@ export default {
 </style>
 <style lang="scss">
 .payment {
-  .coupon-rate {
+    .coupon-rate {
       .el-input__suffix {
         right: 10px;
       }
@@ -630,7 +630,7 @@ export default {
     .payment-date-table {
       .el-table__header-wrapper {
         th {
-          background-color: #F9FBFF;
+          background-color: #FBFBFB;
           padding-left: 10px;
           font-size: 16px;
           color: #8D93A1;
@@ -661,5 +661,13 @@ export default {
         left: 200px;
       }
     }
+    .el-input__prefix {
+      left: 15px;
+    }
+    // .el-date-editor {
+      .el-input--prefix .el-input__inner {
+        padding-left: 40px;
+      }
+    // }
 }
 </style>
