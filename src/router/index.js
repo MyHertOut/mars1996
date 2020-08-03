@@ -42,7 +42,7 @@ const routes = [{
     {
       path: 'home',
       name: 'LoginHome',
-      meta: { isLogin: true },
+      // meta: { isLogin: true },
       component: () => import('@/views/Home.vue')
     }
   ]

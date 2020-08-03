@@ -3,9 +3,9 @@
     <div v-if="$store.state.common.systemConfig.webLoginPageType === '2' || webLoginPageType === '2'" class="notPoc">
       <Header />
       <div class="login-content">
-        <div style="margin-top: 139px;">
+        <!-- <div style="margin-top: 139px;">
           <img src="../assets/images/loginLogo.png" width="420" alt="logo">
-        </div>
+        </div> -->
         <div class="login-box">
           <el-form :model="login" :rules="loginRules" ref="loginForm" class="login-dialog">
             <el-form-item prop="email">
@@ -201,6 +201,7 @@ export default {
     this.getUserInfo();
     this.$store.dispatch('getSystemConfig');
     this.getSystemConfig();
+    console.log(window)
   },
   components: {
     Header,
@@ -234,6 +235,7 @@ export default {
       getSystemConfig().then(res => {
         if (res.data.code === '1000') {
           this.webLoginPageType = res.data.data.webLoginPageType;
+          this.webLoginPageType = '2';
         }
       })
     },
@@ -371,28 +373,29 @@ export default {
       }
     },
     loginUser () {
-      if (this.isLoginBtn) {
-        this.$refs.loginForm.validate(async valid => {
-          if (valid) {
-            this.loading = true;
-            const data = await loginUser({
-              notify: notify.error,
-              data: {
-                email: this.login.email,
-                emailCode: this.login.emailCode,
-                loginPwd: md5(this.login.password).toUpperCase()
-              },
-              slient: true
-            });
-            if (data.code === '1000') {
-              this.emailSecPwd = data.data.email;
-              this.userNo = data.data.userNo;
-              this.getUser();
-            }
-            this.loading = false;
-          }
-        });
-      }
+      this.$router.push({ name: 'LoginHome' });
+      // if (this.isLoginBtn) {
+      //   this.$refs.loginForm.validate(async valid => {
+      //     if (valid) {
+      //       this.loading = true;
+      //       const data = await loginUser({
+      //         notify: notify.error,
+      //         data: {
+      //           email: this.login.email,
+      //           emailCode: this.login.emailCode,
+      //           loginPwd: md5(this.login.password).toUpperCase()
+      //         },
+      //         slient: true
+      //       });
+      //       if (data.code === '1000') {
+      //         this.emailSecPwd = data.data.email;
+      //         this.userNo = data.data.userNo;
+      //         this.getUser();
+      //       }
+      //       this.loading = false;
+      //     }
+      //   });
+      // }
     },
     getUser (userNo) {
       getUser({ slient: true }).then(res => {
@@ -429,7 +432,7 @@ export default {
   position: relative;
   height: 100%;
   .notPoc{
-    background: url(../assets/images/login-bg.png) no-repeat center center;
+    // background: url(../assets/images/login-bg.png) no-repeat center center;
     background-size: cover;
     min-height: 100%;
   }
